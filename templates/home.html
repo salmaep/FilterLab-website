@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block body2 %}
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #ffd5e9, #a9def9); /* Latar belakang bergradasi */
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Membagi halaman menjadi dua kolom */
+        gap: 20px; /* Jarak antara kolom */
+        height: 91vh;
+        width: 100%;
+        text-align: center;
+    }
+
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    h1 {
+        font-size: 3rem;
+        color: rgb(224, 0, 123);
+        font-weight: bold;
+    }
+
+    .highlighted-text {
+        font-weight: bold; /* Membuat teks "FilterLab" menjadi tebal */
+        color: rgb(224, 0, 123); /* Memberikan warna yang mencolok */
+    }
+
+    p {
+        font-size: 1rem;
+        color: #000000;
+        font-weight: 300;
+    }
+
+    /* CSS styling untuk formulir */
+    .card {
+        width: 100%;
+        max-width: 400px; /* Lebar maksimum card */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan card */
+        background-color: #fff3fe; /* Warna latar belakang card */
+    }
+
+    .upload-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .upload-label {
+        background-color: #f1e2f5;
+        color: #c0005a;
+        font-size: 90%;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 10px;
+        margin-right: 10px; /* Tambahkan margin-right untuk memberikan jarak antara label dan input */
+    }
+
+    .upload-label:hover {
+        background-color: #c0005a;
+        color: #f1e2f5;
+    }
+
+    .upload-input {
+        display: none; /* Sembunyikan input asli */
+    }
+
+    .upload-button {
+        background-color: #c0005a;
+        color: #f1e2f5;
+        font-size: 90%;
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+        margin-top: -7px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .upload-button:hover {
+        background-color: #f1e2f5;
+        color: #c0005a;
+    }
+</style>
+
+<div class="container">
+    <div class="left-column">
+        <img src="static/img/landing-page-img.png" alt="Landing Page Image">
+    </div>
+    <div class="right-column">
+        <h1 class="display-4"><span class="highlighted-text">☆*≧FilterLab≦*☆</span></h1>
+        <p class="lead">Platform website untuk Digitalisasi Citra dan Filter Grayscale.</p>
+        <form id="" class="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="inputGroupFile04" class="upload-label">Choose Your Image</label>
+                <input name="file" type="file" id="inputGroupFile04" class="upload-input form-control" accept="image/*">
+                <button type="submit" class="btn btn-light upload-button">Upload</button>
+            </div>
+            <p id="file-name" class="file-name"></p> 
+
+        </form>
+    </div>
+</div>
+
+<script>
+    const fileInput = document.getElementById('inputGroupFile04');
+    const fileNameElement = document.getElementById('file-name');
+
+    fileInput.addEventListener('change', () => {
+        // Menampilkan nama file yang dipilih di elemen <p>
+        fileNameElement.textContent = fileInput.files[0] ? fileInput.files[0].name : '';
+    });
+</script>
+{% endblock %}

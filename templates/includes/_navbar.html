@@ -1,0 +1,38 @@
+<style>
+    /* Efek shadow pada navbar saat hover */
+    .navbar {
+        transition: box-shadow 0.3s;
+        background: linear-gradient(to right, #ffd5e9, #a9def9); /* Latar belakang bergradasi */
+    }
+
+    .navbar:hover {
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Ubah nilai shadow sesuai preferensi Anda */
+    }
+
+    .navbar .nav-item.active .nav-link {
+        color: #c0005a;
+        font-weight: 500;
+    }
+    /* Efek hover pada link navbar */
+    .navbar-nav .nav-item .nav-link:hover {
+        color: #c0005a; /* Ganti dengan warna yang Anda inginkan saat hover */
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/" style="color : #c0005a; font-weight: 600;">☆*≧FilterLab≦*☆</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item {{ 'active' if request.path == '/' else '' }}">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item {{ 'active' if request.path == '/about' else '' }}">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+        </ul>
+    </div>
+</nav>

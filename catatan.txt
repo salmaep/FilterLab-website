@@ -1,0 +1,9 @@
+Function yang masih rusak
+
+Filter gambar
+- Edge Detection 
+- Sharpening
+- Blur
+
+Segmentation
+- Thresholding
