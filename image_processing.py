@@ -6,7 +6,9 @@ from collections import Counter
 from pylab import savefig
 import cv2
 import matplotlib
+import random
 matplotlib.use('Agg')
+
 
 
 def grayscale():
@@ -383,3 +385,88 @@ def threshold(lower_thres, upper_thres):
     img_arr[condition] = 255
     new_img = Image.fromarray(img_arr)
     new_img.save("static/img/img_now.jpg")
+
+def create_puzzle(size):
+    # Load the image
+    img_path = "static/img/img_now.jpg"
+    img = Image.open(img_path)
+
+    # Get image dimensions
+    width, height = img.size
+
+    # Calculate dimensions for each puzzle piece
+    piece_width = width // size
+    piece_height = height // size
+
+    # Initialize an array to store the puzzle pieces
+    puzzle_pieces = []
+
+    for i in range(size):
+        for j in range(size):
+            # Crop a piece from the image
+            left = j * piece_width
+            upper = i * piece_height
+            right = left + piece_width
+            lower = upper + piece_height
+
+            puzzle_piece = img.crop((left, upper, right, lower))
+            puzzle_pieces.append(puzzle_piece)
+
+            # Save the puzzle piece
+            puzzle_piece.save(f"static/img/puzzle_piece_{i}_{j}.jpg")
+
+    return puzzle_pieces
+
+def create_random_puzzle(size):
+    # Load the image
+    img_path = "static/img/img_now.jpg"
+    img = Image.open(img_path)
+
+    # Get image dimensions
+    width, height = img.size
+
+    # Calculate the total area of the original image
+    original_area = width * height
+
+    # Calculate the area of each puzzle piece
+    piece_area = original_area / (size ** 2)
+
+    # Calculate the side length of each puzzle piece
+    piece_side_length = int(math.sqrt(piece_area))
+
+    # Initialize an array to store the puzzle pieces
+    puzzle_pieces = []
+
+    for i in range(size):
+        for j in range(size):
+            # Crop a piece from the image
+            left = j * piece_side_length
+            upper = i * piece_side_length
+            right = left + piece_side_length
+            lower = upper + piece_side_length
+
+            puzzle_piece = img.crop((left, upper, right, lower))
+            puzzle_pieces.append(puzzle_piece)
+
+    return puzzle_pieces
+
+
+def randomize_puzzle_order(puzzle_pieces):
+    # Shuffle the order of the puzzle pieces
+    random.shuffle(puzzle_pieces)
+
+def get_image_values(image_path):
+    try:
+        img = Image.open(image_path)
+        width, height = img.size
+        pixel_values = []
+
+        for y in range(height):
+            for x in range(width):
+                pixel = img.getpixel((x, y))
+                pixel_values.append(pixel)
+
+        return pixel_values, width, height
+    except Exception as e:
+        print(f"Error: {e}")
+        return [], None, None

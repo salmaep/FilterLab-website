@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, make_response
 from datetime import datetime
 from functools import wraps, update_wrapper
 from shutil import copyfile
+import random
 
 app = Flask(__name__)
 
@@ -195,6 +196,42 @@ def thresholding():
     image_processing.threshold(lower_thres, upper_thres)
     return render_template("uploaded.html", file_path="img/img_now.jpg")
 
+
+@app.route("/puzzle", methods=["POST"])
+@nocache
+def puzzle():
+    size = int(request.form['size'])
+    puzzle_pieces = image_processing.create_puzzle(size)
+
+    # Get the file paths of the puzzle pieces
+    puzzle_piece_paths = [f"img/puzzle_piece_{i}_{j}.jpg" for i in range(size) for j in range(size)]
+
+    return render_template("puzzle.html", puzzle_piece_paths=puzzle_piece_paths)
+
+@app.route("/random_puzzle", methods=["POST"])
+@nocache
+def random_puzzle():
+    size = int(request.form['size'])
+    puzzle_pieces = image_processing.create_random_puzzle(size)
+    image_processing.randomize_puzzle_order(puzzle_pieces)
+
+    # Save the shuffled puzzle pieces
+    for idx, piece in enumerate(puzzle_pieces):
+        piece.save(f"static/img/random_puzzle_piece_{idx}.jpg")
+
+    # Get the file paths of the shuffled puzzle pieces
+    puzzle_piece_paths = [f"img/random_puzzle_piece_{i}.jpg" for i in range(len(puzzle_pieces))]
+
+    return render_template("puzzle_random.html", puzzle_piece_paths=puzzle_piece_paths)
+
+@app.route('/show_image_values', methods=['POST'])
+@nocache
+def show_image_values():
+    # Mendapatkan nilai dari gambar
+    pixel_values, width, height = image_processing.get_image_values('static/img/img_now.jpg')
+    
+    # Mengirimkan nilai-nilai tersebut ke template HTML
+    return render_template("pixel_images.html", pixel_values=pixel_values, width=width, height=height)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")

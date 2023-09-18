@@ -220,15 +220,23 @@
                     </form>
                 </div>
             </div>
-            
 
         </div>    
         </div>
         <div class="col-md-8">
             <h3>Result ノ彡*★,°*</h3>
             <div class="text-center">
-                <div id="imageDimensions"></div>
-                <img class="img-fluid" src="{{ url_for('static', filename=file_path) }}" alt="image here">
+                <div class="container" style="width: 760px;">
+                    <div class="row" id="randomized-images">
+                        {% for path in puzzle_piece_paths %}
+                        <div>
+                            <img src="{{ url_for('static', filename=path) }}" alt="Puzzle Piece" class="img-fluid mx-2 my-2">
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>

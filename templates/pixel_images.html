@@ -220,15 +220,38 @@
                     </form>
                 </div>
             </div>
-            
 
         </div>    
         </div>
         <div class="col-md-8">
             <h3>Result ノ彡*★,°*</h3>
             <div class="text-center">
-                <div id="imageDimensions"></div>
-                <img class="img-fluid" src="{{ url_for('static', filename=file_path) }}" alt="image here">
+                <h5>Nilai Pixel</h5>
+                <h6>Width: {{ width }}</h6>
+                <h6>Height: {{ height }}</h6>
+                <div class="row" style="margin-bottom: 20px;">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">R</th>
+                                <th scope="col">G</th>
+                                <th scope="col">B</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pixel in pixel_values %}
+                                <tr>
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{ pixel[0] }}</td>
+                                    <td>{{ pixel[1] }}</td>
+                                    <td>{{ pixel[2] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>

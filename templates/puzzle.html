@@ -205,32 +205,54 @@
                             <label for="num-rows">Input dimensi puzzle</label>
                             <input type="number" class="form-control" name="size" placeholder="1-10">
                             <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
-                            <button type="submit" class="btn btn-primary btn-block custom-button3">Create Random Puzzle</button>
+                            <button type="submit" class="btn btn-primary btn-block custom-button3">Create Puzzle</button>
                         </div>
                     </form>
                 </div>
             </div>
-
-            <!-- Dimensions Image -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Get Dimensions Images</h5>
-                    <form method="post" action="{{ url_for('show_image_values') }}">
-                        <button type="submit" class="btn btn-primary btn-block custom-button4">Dapatkan Dimensi</button>
-                    </form>
-                </div>
-            </div>
-            
-
         </div>    
         </div>
         <div class="col-md-8">
             <h3>Result ノ彡*★,°*</h3>
             <div class="text-center">
-                <div id="imageDimensions"></div>
-                <img class="img-fluid" src="{{ url_for('static', filename=file_path) }}" alt="image here">
+                <div class="container" style="width: 760px;">
+                    <div class="row" id="randomized-images">
+                        {% for piece_path in puzzle_piece_paths %}
+                            <div class="m-1">
+                                <img src="{{ url_for('static', filename=piece_path) }}" alt="Puzzle Piece">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Fungsi untuk mengacak array
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Fungsi untuk menjalankan pengacakan setelah seluruh halaman dimuat
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil elemen-elemen gambar dalam div dengan ID 'randomized-images'
+        const container = document.getElementById('randomized-images');
+        const images = Array.from(container.querySelectorAll('img'));
+
+        // Lakukan pengacakan pada elemen-elemen gambar
+        shuffleArray(images);
+
+        // Hapus semua elemen gambar dari div
+        images.forEach(image => container.removeChild(image));
+
+        // Tambahkan elemen-elemen gambar yang sudah diacak kembali ke div
+        images.forEach(image => container.appendChild(image));
+    });
+</script>
 {% endblock %}
