@@ -34,194 +34,306 @@
 <div class="container-fluid" style="margin-top: 10px;">
     <div class="row">
         <div class="col-md-4">
-        <h3>Filter dan Efek ✧</h3>
-        <div style="max-height: calc(100vh - 120px); overflow-y: auto;">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Umum</h5>
-                    <div class="d-flex flex-wrap">
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('normal') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button">Normal</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('grayscale') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button">Grayscale</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('zoomin') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button">Zoom In</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('zoomout') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button">Zoom Out</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Pergeseran -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Pergeseran</h5>
-                    <div class="d-flex flex-wrap">
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('move_left') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Kiri</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('move_right') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Kanan</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('move_up') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Atas</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('move_down') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Bawah</button>
-                            </form>
+            <h3>Filter dan Efek ✧</h3>
+            <div style="max-height: calc(100vh - 120px); overflow-y: auto;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Umum</h5>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('normal') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button">Normal</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('grayscale') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button">Grayscale</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('zoomin') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button">Zoom In</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('zoomout') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button">Zoom Out</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Penerangan -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Penerangan</h5>
-                    <div class="d-flex flex-wrap">
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('brightness_multiplication') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button3">Terang (*)</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('brightness_division') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button3">Gelap (/)</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('brightness_addition') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button3">Terang (+)</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('brightness_substraction') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button3">Gelap (-)</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Filter Gambar -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Filtering</h5>
-                    <div class="d-flex flex-wrap">
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('edge_detection') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button4">Edge Detection</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('blur') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button4">Blur</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('sharpening') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary btn-block custom-button4">Sharpening</button>
-                            </form>
+                <!-- Pergeseran -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pergeseran</h5>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_left') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Kiri</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_right') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Kanan</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_up') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Atas</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_down') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button2">Geser Bawah</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Analisis dan Pemrosesan -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Analisis & Pemrosesan</h5>
-                    <div class="d-flex flex-wrap">
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('histogram_rgb') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary custom-button5">Histogram</button>
-                            </form>
-                        </div>
-                        <div class="p-2 flex-fill bd-highlight">
-                            <form id="" action="{{ url_for('histogram_equalizer') }}" method="POST" enctype="multipart/form-data">
-                                <button type="submit" class="btn btn-primary custom-button5">Histogram Equalizer</button>
-                            </form>
+    
+                <!-- Penerangan -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Penerangan</h5>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_multiplication') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button3">Terang (*)</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_division') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button3">Gelap (/)</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_addition') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button3">Terang (+)</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_substraction') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button3">Gelap (-)</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Segmentation -->
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Segmentation</h5>
-                    <form id="" action="{{ url_for('thresholding') }}" method="POST" enctype="multipart/form-data">
-                        <div class="form-row align-items-center">
-                            <label for="lower_thres">Batas Bawah</label>
-                            <input type="number" class="form-control" name="lower_thres" placeholder="0-255">
-                            <label for="upper_thres">Batas Atas</label>
-                            <input type="number" class="form-control" name="upper_thres" placeholder="0-255">
-                            <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
-                            <button type="submit" class="btn btn-primary btn-block custom-button">Thresholding</button>
+    
+                <!-- Filter Gambar -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Filtering</h5>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('edge_detection') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button4">Edge Detection</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('blur') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button4">Blur</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('sharpening') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary btn-block custom-button4">Sharpening</button>
+                                </form>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-
-             <!-- Puzzle -->
-             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Puzzle Image</h5>
-                    <form id="" action="{{ url_for('puzzle') }}" method="POST" enctype="multipart/form-data">
-                        <div class="form-row align-items-center">
-                            <label for="num-rows">Input dimensi puzzle</label>
-                            <input type="number" class="form-control" name="size" placeholder="1-10">
-                            <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
-                            <button type="submit" class="btn btn-primary btn-block custom-button2">Create Puzzle</button>
+    
+                <!-- Analisis dan Pemrosesan -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Analisis & Pemrosesan</h5>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('histogram_rgb') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary custom-button5">Histogram</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('histogram_equalizer') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-primary custom-button5">Histogram Equalizer</button>
+                                </form>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-
-             <!-- Random Puzzle -->
-             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Random Puzzle Image</h5>
-                    <form id="" action="{{ url_for('random_puzzle') }}" method="POST" enctype="multipart/form-data">
-                        <div class="form-row align-items-center">
-                            <label for="num-rows">Input dimensi puzzle</label>
-                            <input type="number" class="form-control" name="size" placeholder="1-10">
-                            <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
-                            <button type="submit" class="btn btn-primary btn-block custom-button3">Create Puzzle</button>
-                        </div>
-                    </form>
+    
+                <!-- Segmentation -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Segmentation</h5>
+                        <form id="" action="{{ url_for('thresholding') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <label for="lower_thres">Batas Bawah</label>
+                                <input type="number" class="form-control" name="lower_thres" placeholder="0-255">
+                                <label for="upper_thres">Batas Atas</label>
+                                <input type="number" class="form-control" name="upper_thres" placeholder="0-255">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button">Thresholding</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+    
+                 <!-- Puzzle -->
+                 <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Puzzle Image</h5>
+                        <form id="" action="{{ url_for('puzzle') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <label for="num-rows">Input value</label>
+                                <input type="number" min="1" max="10" class="form-control" name="size" placeholder="1-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button2">Create Puzzle</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    
+                 <!-- Random Puzzle -->
+                 <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Random Puzzle Image</h5>
+                        <form id="" action="{{ url_for('random_puzzle') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <label for="num-rows">Input value</label>
+                                <input type="number" min="1" max="10" class="form-control" name="size" placeholder="1-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button3">Create Random Puzzle</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    
+                <!-- Dimensions Image -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Get Dimensions Images</h5>
+                        <form method="post" action="{{ url_for('show_image_values') }}">
+                            <button type="submit" class="btn btn-primary btn-block custom-button4">Dapatkan Dimensi</button>
+                        </form>
+                    </div>
+                </div>
+    
+                <!-- Dimensions Image -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Filtering Images</h5>
+                        <form method="post" action="{{ url_for('zero_padding') }}">
+                            <button type="submit" class="btn btn-primary btn-block custom-button5">Zero Padding </button>
+                        </form><br/>
+                        <form method="post" action="{{ url_for('lowFilterPass') }}">
+                            <button type="submit" class="btn btn-primary btn-block custom-button">Lowpass Filter </button>
+                        </form><br/>
+                        <form method="post" action="{{ url_for('highFilterPass') }}">
+                            <button type="submit" class="btn btn-primary btn-block custom-button2">Highpass Filter</button>
+                        </form><br/>
+                        <form method="post" action="{{ url_for('bandFilterPass') }}">
+                            <button type="submit" class="btn btn-primary btn-block custom-button3">Bandpass Filter</button>
+                        </form>
+                    </div>
+                </div>
+    
+                <!-- Custom blurring Image -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Custom Filtering Images</h5>
+                        <form id="" action="{{ url_for('lowpass_filter') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <h6 class="card-title">Lowpass Blur</h6><br/>
+                                <input type="number" class="form-control" name="size" min="0" max="10" placeholder="Input value : 0-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button5">Generate</button>
+                            </div>
+                        </form>
+    
+                        <form id="" action="{{ url_for('highpass_filter') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <h6 class="card-title" style="margin-top: 10px;">Highpass Blur</h6><br/>                           
+                                <input type="number" class="form-control" name="size" min="0" max="10" placeholder="Input value : 0-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button">Generate</button>
+                            </div>
+                        </form>
+    
+                        <form id="" action="{{ url_for('bandpass_filter') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <h6 class="card-title" style="margin-top: 10px;">Bandpass Blur</h6><br/>
+                                <input type="number" class="form-control" name="size" min="0" max="10" placeholder="Input value : 0-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button2">Generate</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    
+                <!-- New Custom Blurring -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Custom  Blurring</h5>
+                        <form id="" action="{{ url_for('newBlurring') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <h6 class="card-title">Blurring</h6><br/>
+                                <input type="number" class="form-control" name="size" min="0" max="10" placeholder="Input value : 0-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button3">Generate</button>
+                            </div>
+                        </form>
+    
+                        <form id="" action="{{ url_for('gaussianBlur') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <h6 class="card-title" style="margin-top: 10px;">Gaussian Blur</h6><br/>
+                                <input type="number" class="form-control" name="size" min="0" max="10" placeholder="Input value : 0-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button4">Generate</button>
+                            </div>
+                        </form>
+    
+                        <form id="" action="{{ url_for('medianBlur') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <h6 class="card-title" style="margin-top: 10px;">Median Blur</h6><br/>
+                                <input type="number" class="form-control" name="size" min="0" max="10" placeholder="Input value : 0-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button5">Generate</button>
+                            </div>
+                        </form>
+    
+                        <form id="" action="{{ url_for('bilateral_filter') }}" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <h6 class="card-title" style="margin-top: 10px;">Bilateral Blur</h6><br/>
+                                <input type="number" class="form-control" name="size" min="0" max="10" placeholder="Input value : 0-10">
+                                <label>&nbsp;</label> <!-- Label kosong untuk spacing -->
+                                <button type="submit" class="btn btn-primary btn-block custom-button">Generate</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>    
             </div>
-        </div>    
-        </div>
         <div class="col-md-8">
             <h3>Result ノ彡*★,°*</h3>
             <div class="text-center">
                 <div class="container" style="width: 760px;">
                     <div class="row" id="randomized-images">
-                        {% for piece_path in puzzle_piece_paths %}
-                            <div class="m-1">
-                                <img src="{{ url_for('static', filename=piece_path) }}" alt="Puzzle Piece">
+                        {% for i in range(rows) %}
+                            <div class="row">
+                                {% for j in range(cols) %}
+                                    {% set image_index = i * cols + j %}
+                                    {% if image_index < image_paths|length %}
+                                        {% set image_path = image_paths[image_index] %}
+                                        <div class="col">
+                                            <img src="{{ image_path }}" alt="Divided Image (Row {{ i }}, Col {{ j }})" class="img-fluid" style="width: 100%;margin-top: 23px;">
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        {% endfor %}
                     </div>
                     
                 </div>

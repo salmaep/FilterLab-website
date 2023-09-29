@@ -470,3 +470,97 @@ def get_image_values(image_path):
     except Exception as e:
         print(f"Error: {e}")
         return [], None, None
+    
+def zero_padding():
+    img = cv2.imread("static/img/img_now.jpg")
+    padded_img = cv2.copyMakeBorder(img, 1, 1, 1, 1, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+    cv2.imwrite("static/img/img_now.jpg", padded_img)
+
+
+def lowFilterPass():
+    img = cv2.imread("static/img/img_now.jpg")
+    # create the low pass filter
+    lowFilter = np.ones((3,3),np.float32)/9
+    # apply the low pass filter to the image
+    lowFilterImage = cv2.filter2D(img,-1,lowFilter)
+    cv2.imwrite("static/img/img_now.jpg", lowFilterImage)
+
+
+def highFilterPass():
+    img = cv2.imread("static/img/img_now.jpg")
+    # create the high pass filter
+    highFilter = np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]])
+    # apply the high pass filter to the image
+    highFilterImage = cv2.filter2D(img,-1,highFilter)
+    cv2.imwrite("static/img/img_now.jpg", highFilterImage)
+
+
+def bandFilterPass():
+    img = cv2.imread("static/img/img_now.jpg")
+    # create the band pass filter
+    bandFilter = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]])
+    # apply the band pass filter to the image
+    bandFilterImage = cv2.filter2D(img,-1,bandFilter)
+    cv2.imwrite("static/img/img_now.jpg", bandFilterImage)
+
+def newBlurring(size):
+    img = cv2.imread("static/img/img_now.jpg")
+    # create the band pass filter
+    blur = cv2.blur(src=img, ksize=(size,size))
+    cv2.imwrite("static/img/img_now.jpg", blur)
+
+def gaussianBlur(size):
+    img = cv2.imread("static/img/img_now.jpg")
+    # create the band pass filter
+    blur = cv2.GaussianBlur(src=img, ksize=(size,size),sigmaX=0)
+    cv2.imwrite("static/img/img_now.jpg", blur)
+
+def medianBlur(size):
+    img = cv2.imread("static/img/img_now.jpg")
+    # create the band pass filter
+    blur = cv2.medianBlur(src=img, ksize=size)
+    cv2.imwrite("static/img/img_now.jpg", blur)
+
+def bilateral_filter():
+    image = cv2.imread("static/img/img_now.jpg")
+    cv_bilateral = cv2.bilateralFilter(image, 9, 75, 75)
+    cv2.imwrite("static/img/img_now.jpg", cv_bilateral)
+
+def lowpass_filter(size):
+    image = cv2.imread("static/img/img_now.jpg")
+
+    # Define kernel size and generate a random kernel
+    kernel_size = size
+    random_kernel = np.random.rand(kernel_size, kernel_size)
+    random_kernel /= np.sum(random_kernel)  # Normalize the kernel
+
+    cv_lowpass = cv2.filter2D(image, -1, random_kernel)
+    cv2.imwrite("static/img/img_now.jpg", cv_lowpass)
+
+
+def highpass_filter(size):
+    image = cv2.imread("static/img/img_now.jpg")
+
+    # Define kernel size and generate a random kernel
+    kernel_size = size
+    random_kernel = np.random.randint(-1, 2, size=(kernel_size, kernel_size))
+    random_kernel[1, 1] = (
+        -np.sum(random_kernel) + 1
+    )  # Adjust center element to make the sum zero
+
+    cv_highpass = cv2.filter2D(image, -1, random_kernel)
+    cv2.imwrite("static/img/img_now.jpg", cv_highpass)
+
+
+def bandpass_filter(size):
+    image = cv2.imread("static/img/img_now.jpg")
+
+    # Define kernel size and generate a random kernel
+    kernel_size = size
+    random_kernel = np.random.randint(-1, 2, size=(kernel_size, kernel_size))
+
+    while np.sum(random_kernel) == 0:
+        random_kernel = np.random.randint(-1, 2, size=(kernel_size, kernel_size))
+
+    cv_bandpass = cv2.filter2D(image, -1, random_kernel)
+    cv2.imwrite("static/img/img_now.jpg", cv_bandpass)

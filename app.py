@@ -84,14 +84,14 @@ def grayscale():
 @nocache
 def zoomin():
     image_processing.zoomin()
-    return render_template("uploaded.html", file_path="img/img_now.jpg")
+    return render_template("zoom.html", file_path="img/img_now.jpg")
 
 
 @app.route("/zoomout", methods=["POST"])
 @nocache
 def zoomout():
     image_processing.zoomout()
-    return render_template("uploaded.html", file_path="img/img_now.jpg")
+    return render_template("zoom.html", file_path="img/img_now.jpg")
 
 
 @app.route("/move_left", methods=["POST"])
@@ -200,29 +200,32 @@ def thresholding():
 @app.route("/puzzle", methods=["POST"])
 @nocache
 def puzzle():
-    size = int(request.form['size'])
-    puzzle_pieces = image_processing.create_puzzle(size)
+    num_puzzles = int(request.form['size'])
+    image_path = "static/img/img_now.jpg"  # Assuming this is the path of your uploaded image
+    rows = num_puzzles
+    cols = num_puzzles
 
-    # Get the file paths of the puzzle pieces
-    puzzle_piece_paths = [f"img/puzzle_piece_{i}_{j}.jpg" for i in range(size) for j in range(size)]
+    parts = image_processing.create_puzzle(rows)
 
-    return render_template("puzzle.html", puzzle_piece_paths=puzzle_piece_paths)
+    if parts is not None:
+        return render_template("puzzle.html", image_paths=[f"static/img/puzzle_piece_{i}_{j}.jpg" for i in range(rows) for j in range(cols)], rows=rows, cols=cols)
+    else:
+        return "Terjadi kesalahan saat membagi gambar. Silakan coba lagi."
 
 @app.route("/random_puzzle", methods=["POST"])
 @nocache
 def random_puzzle():
-    size = int(request.form['size'])
-    puzzle_pieces = image_processing.create_random_puzzle(size)
-    image_processing.randomize_puzzle_order(puzzle_pieces)
+    num_puzzles = int(request.form['size'])
+    image_path = "static/img/img_now.jpg"  # Assuming this is the path of your uploaded image
+    rows = num_puzzles
+    cols = num_puzzles
 
-    # Save the shuffled puzzle pieces
-    for idx, piece in enumerate(puzzle_pieces):
-        piece.save(f"static/img/random_puzzle_piece_{idx}.jpg")
+    parts = image_processing.create_puzzle(rows)
 
-    # Get the file paths of the shuffled puzzle pieces
-    puzzle_piece_paths = [f"img/random_puzzle_piece_{i}.jpg" for i in range(len(puzzle_pieces))]
-
-    return render_template("puzzle_random.html", puzzle_piece_paths=puzzle_piece_paths)
+    if parts is not None:
+        return render_template("puzzle_random.html", image_paths=[f"static/img/puzzle_piece_{i}_{j}.jpg" for i in range(rows) for j in range(cols)], rows=rows, cols=cols)
+    else:
+        return "Terjadi kesalahan saat membagi gambar. Silakan coba lagi."
 
 @app.route('/show_image_values', methods=['POST'])
 @nocache
@@ -232,6 +235,83 @@ def show_image_values():
     
     # Mengirimkan nilai-nilai tersebut ke template HTML
     return render_template("pixel_images.html", pixel_values=pixel_values, width=width, height=height)
+
+@app.route("/zero_padding", methods=["POST"])
+@nocache
+def zero_padding():
+    image_processing.zero_padding()
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+
+@app.route("/lowFilterPass", methods=["POST"])
+@nocache
+def lowFilterPass():
+    image_processing.lowFilterPass()
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+
+@app.route("/highFilterPass", methods=["POST"])
+@nocache
+def highFilterPass():
+    image_processing.highFilterPass()
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+
+@app.route("/bandFilterPass", methods=["POST"])
+@nocache
+def bandFilterPass():
+    image_processing.bandFilterPass()
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+@app.route("/newBlurring", methods=["POST"])
+@nocache
+def newBlurring():
+    newBlur = int(request.form['size'])
+    image_processing.newBlurring(newBlur)
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+@app.route("/gaussianBlur", methods=["POST"])
+@nocache
+def gaussianBlur():
+    gaussianBlur = int(request.form['size'])
+    image_processing.gaussianBlur(gaussianBlur)
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+@app.route("/medianBlur", methods=["POST"])
+@nocache
+def medianBlur():
+    medianBlur = int(request.form['size'])
+    image_processing.medianBlur(medianBlur)
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+@app.route("/bilateral_filter", methods=["POST"])
+@nocache
+def bilateral_filter():
+    image_processing.bilateral_filter()
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+@app.route("/lowpass_filter", methods=["POST"])
+@nocache
+def lowpass_filter():
+    size = int(request.form["size"])
+    image_processing.lowpass_filter(size)
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+
+@app.route("/highpass_filter", methods=["POST"])
+@nocache
+def highpass_filter():
+    size = int(request.form["size"])
+    image_processing.highpass_filter(size)
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
+
+
+@app.route("/bandpass_filter", methods=["POST"])
+@nocache
+def bandpass_filter():
+    size = int(request.form["size"])
+    image_processing.bandpass_filter(size)
+    return render_template("uploaded.html", file_path="img/img_now.jpg")
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
