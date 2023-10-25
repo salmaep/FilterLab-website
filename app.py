@@ -7,6 +7,7 @@ from datetime import datetime
 from functools import wraps, update_wrapper
 from shutil import copyfile
 import random
+import json
 
 app = Flask(__name__)
 
@@ -313,5 +314,39 @@ def bandpass_filter():
     image_processing.bandpass_filter(size)
     return render_template("uploaded.html", file_path="img/img_now.jpg")
 
+@app.route("/process_images", methods=["POST"])
+@nocache
+def process_images():
+    # Panggil fungsi process_image dari image_processing.py
+    image_processing.process_image()
+
+    # Setelah pemrosesan, acak urutan hasil citra
+    # processed_images = list(range(1, 15))
+    duplicated_images = image_processing.get_duplicated_processed_images()
+    # processed_images = [str(i) for i in range(1, 15)]
+    random.shuffle(duplicated_images)
+
+    # Render halaman matchgame.html dengan hasil citra yang diacak
+    return render_template('matchGame.html', processed_images=duplicated_images)
+
+
+# Load the knowledge base from the JSON file
+with open("./templates/knowledge_base.json", "r") as file:
+    knowledge_base = json.load(file)
+
+@app.route('/detection_numbers', methods=['POST'])
+def detection_numbers():
+    # image_path = request.form['image_path']
+    image_path = "static/img/img_now.jpg"
+    recognized_digits = image_processing.number_recognition(image_path, knowledge_base)
+    
+    if recognized_digits:
+        result = f"Recognized digits for {image_path} : {''.join(map(str, recognized_digits))}"
+    else:
+        result = f"Digit recognition failed for {image_path}. No matching digits found in the knowledge base."
+    
+    return render_template("numbers_detection.html", file_path="img/img_now.jpg", result=result)
+                          
+                           
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")

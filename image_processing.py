@@ -7,9 +7,8 @@ from pylab import savefig
 import cv2
 import matplotlib
 import random
+import mahotas as mh
 matplotlib.use('Agg')
-
-
 
 def grayscale():
     if not is_grey_scale("static/img/img_now.jpg"):
@@ -476,7 +475,6 @@ def zero_padding():
     padded_img = cv2.copyMakeBorder(img, 1, 1, 1, 1, cv2.BORDER_CONSTANT, value=(0, 0, 0))
     cv2.imwrite("static/img/img_now.jpg", padded_img)
 
-
 def lowFilterPass():
     img = cv2.imread("static/img/img_now.jpg")
     # create the low pass filter
@@ -485,7 +483,6 @@ def lowFilterPass():
     lowFilterImage = cv2.filter2D(img,-1,lowFilter)
     cv2.imwrite("static/img/img_now.jpg", lowFilterImage)
 
-
 def highFilterPass():
     img = cv2.imread("static/img/img_now.jpg")
     # create the high pass filter
@@ -493,7 +490,6 @@ def highFilterPass():
     # apply the high pass filter to the image
     highFilterImage = cv2.filter2D(img,-1,highFilter)
     cv2.imwrite("static/img/img_now.jpg", highFilterImage)
-
 
 def bandFilterPass():
     img = cv2.imread("static/img/img_now.jpg")
@@ -537,7 +533,6 @@ def lowpass_filter(size):
     cv_lowpass = cv2.filter2D(image, -1, random_kernel)
     cv2.imwrite("static/img/img_now.jpg", cv_lowpass)
 
-
 def highpass_filter(size):
     image = cv2.imread("static/img/img_now.jpg")
 
@@ -551,7 +546,6 @@ def highpass_filter(size):
     cv_highpass = cv2.filter2D(image, -1, random_kernel)
     cv2.imwrite("static/img/img_now.jpg", cv_highpass)
 
-
 def bandpass_filter(size):
     image = cv2.imread("static/img/img_now.jpg")
 
@@ -564,3 +558,245 @@ def bandpass_filter(size):
 
     cv_bandpass = cv2.filter2D(image, -1, random_kernel)
     cv2.imwrite("static/img/img_now.jpg", cv_bandpass)
+
+# weeks 7 - ets 
+def process_image():
+    # Baca citra
+    image = cv2.imread("static/img/img_now.jpg")
+
+    # Daftar nama filter
+    filter_names = [
+        "Gaussian_Blur",
+        "Median_Blur",
+        "Bilateral_Filter",
+        "Laplacian",
+        "Sobel_X",
+        "Sobel_Y",
+        "Canny",
+        "Sharpening",
+        "Erosion",
+        "Dilation",
+        "Opening",
+        "Closing",
+        "Gradient",
+        "TopHat"
+    ]
+
+    # Daftar hasil pemrosesan
+    processed_images = []
+
+    # Filter 1: Gaussian Blur
+    gaussian_blur = cv2.GaussianBlur(image, (5, 5), 0)
+    processed_images.append(gaussian_blur)
+
+    # Filter 2: Median Blur
+    median_blur = cv2.medianBlur(image, 5)
+    processed_images.append(median_blur)
+
+    # Filter 3: Bilateral Filter
+    bilateral_filter = cv2.bilateralFilter(image, 9, 75, 75)
+    processed_images.append(bilateral_filter)
+
+    # Filter 4: Laplacian
+    laplacian = cv2.Laplacian(image, cv2.CV_64F)
+    processed_images.append(laplacian)
+
+    # Filter 5: Sobel X
+    sobel_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=5)
+    processed_images.append(sobel_x)
+
+    # Filter 6: Sobel Y
+    sobel_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=5)
+    processed_images.append(sobel_y)
+
+    # Filter 7: Canny Edge Detection
+    canny = cv2.Canny(image, 100, 200)
+    processed_images.append(canny)
+
+    # Filter 8: Sharpening
+    sharpening_kernel = np.array([[-1, -1, -1],
+                                [-1, 9, -1],
+                                [-1, -1, -1]])
+    sharpened = cv2.filter2D(image, -1, sharpening_kernel)
+    processed_images.append(sharpened)
+
+    # Filter 9: Erosion
+    kernel = np.ones((5, 5), np.uint8)
+    erosion = cv2.erode(image, kernel, iterations=1)
+    processed_images.append(erosion)
+
+    # Filter 10: Dilation
+    dilation = cv2.dilate(image, kernel, iterations=1)
+    processed_images.append(dilation)
+
+    # Filter 11: Opening (Erosion followed by Dilation)
+    opening = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
+    processed_images.append(opening)
+
+    # Filter 12: Closing (Dilation followed by Erosion)
+    closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+    processed_images.append(closing)
+
+    # Filter 13: Gradient (Dilation - Erosion)
+    gradient = cv2.morphologyEx(image, cv2.MORPH_GRADIENT, kernel)
+    processed_images.append(gradient)
+
+    # Filter 14: Top Hat (Original - Opening)
+    tophat = cv2.morphologyEx(image, cv2.MORPH_TOPHAT, kernel)
+    processed_images.append(tophat)
+
+    # Simpan hasil pemrosesan ke berkas
+    for i, processed_image in enumerate(processed_images):
+        output_path = f"static/img/output_image_{i + 1}.jpg"
+        cv2.imwrite(output_path, processed_image)
+
+def get_duplicated_processed_images():
+    processed_images = [str(i) for i in range(1, 15)]
+    duplicated_images = []
+
+    # Loop melalui nomor file dan menggandakan nama file yang sesuai formatnya
+    for i in range(1, 15):
+        file_name = f"static/img/output_image_{i}.jpg"
+        duplicated_images.extend([file_name, file_name])
+
+    random.shuffle(duplicated_images)  # Acak urutan hasil citra yang terduplikasi
+    print(duplicated_images)
+    return duplicated_images
+
+# image_processing
+def freeman_chain_code2(contour):
+    chain_code = []
+    prev_point = contour[0][0]
+    
+    for point in contour[1:]:
+        x, y = point[0]
+        dx = x - prev_point[0]
+        dy = y - prev_point[1]
+        
+        # Calculate the angle in degrees
+        angle = np.degrees(np.arctan2(dy, dx))
+        
+        # Convert the angle to Freeman Chain Code (numerical values)
+        code = round((angle % 360) / 45) % 8
+        chain_code.append(code)
+        
+        prev_point = point[0]
+    
+    return chain_code
+
+def goofy(lst):
+    # Add 1 to each element
+    for i in range(len(lst)):
+        lst[i] += 1
+        # Check if any element becomes 10 and change it to 0
+        if lst[i] == 10:
+            lst[i] = 0
+
+def create_image_from_chain_code(chain_code, image_size):
+    # Initialize a white canvas
+    image = np.zeros(image_size, dtype=np.uint8)
+    x, y = image_size[0] // 2, image_size[1] // 2  # Start from the center
+
+    # Define the Freeman Chain Code directional offsets
+    offsets = [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
+
+    for code in chain_code:
+        dx, dy = offsets[code]
+        x, y = x + dx, y + dy
+        # Ensure the coordinates are within the image bounds
+        x = max(0, min(x, image_size[0] - 1))
+        y = max(0, min(y, image_size[1] - 1))
+        # Set the pixel at the new position to white
+        image[x, y] = 255
+
+    return image
+
+def read_binary(input_image_path):
+    # Load the image
+    image = cv2.imread(input_image_path)
+    image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+
+    if image is None:
+        print("Error: Unable to read the image.")
+        return
+
+    # Apply Otsu's thresholding
+    _, binary_image = cv2.threshold(image, 128, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+
+    return binary_image
+
+def get_contour(binary_image):
+    
+    contours, _ = cv2.findContours(
+        binary_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    return contours
+
+def FCC(binary_image):
+    contours = get_contour(binary_image)
+    for contour in contours:
+        result = freeman_chain_code2(contour)
+        print(f'result {result}')
+        return result
+        
+def invert_binary_image(binary_image):
+    # Invert the binary image using the NOT operation
+    inverted_image = cv2.bitwise_not(binary_image)
+    return inverted_image
+
+def calculate_similarity(chain_code1, chain_code2):
+    # Calculate the similarity between two FCCs
+    length1 = len(chain_code1)
+    length2 = len(chain_code2)
+
+    # Pad the shorter chain code with zeros to match the length of the longer chain code
+    if length1 < length2:
+        chain_code1 = chain_code1 + [0] * (length2 - length1)
+    elif length1 > length2:
+        chain_code2 = chain_code2 + [0] * (length1 - length2)
+
+    return np.sum(np.array(chain_code1) == np.array(chain_code2))
+
+def recognize_digit(input_chain_code, knowledge_base):
+    best_match = None
+    best_similarity = 0
+
+    for digit, data in knowledge_base.items():
+        for stored_chain_code in data["FCC_8_Directions"]:
+            for input_code in input_chain_code:
+                similarity = calculate_similarity(input_code, stored_chain_code)
+                if similarity > best_similarity:
+                    best_similarity = similarity
+                    best_match = digit
+
+    return best_match
+
+def number_recognition(image_path, knowledge_base):
+    # Read and process the image
+    binary_image = invert_binary_image(read_binary(image_path))
+    contours = get_contour(binary_image)
+
+    recognized_digits = []
+
+    # Create a dictionary to map the position of contours to their FCC
+    contour_position_mapping = {}
+
+    for contour in contours:
+        # Calculate FCC in 8 directions for each contour
+        fcc_8_directions = freeman_chain_code2(contour)
+
+        # Determine the position (e.g., x-coordinate) of the contour
+        position = contour[0][0][0]  # Assuming x-coordinate is at index 0
+        
+        contour_position_mapping[position] = fcc_8_directions
+
+    # Sort the contours based on their positions
+    sorted_contours = sorted(contour_position_mapping.items())
+
+    for _, fcc_8_directions in sorted_contours:
+        recognized_digit = recognize_digit([fcc_8_directions], knowledge_base)
+
+        if recognized_digit is not None:
+            recognized_digits.append(recognized_digit)
+
+    return recognized_digits

@@ -102,7 +102,6 @@
             </div>
           </div>
         </div>
-
         <!-- Pergeseran -->
         <div class="card">
           <div class="card-body">
@@ -721,7 +720,7 @@
           </div>
         </div>
 
-        <!-- Recognition Numbers -->
+        <!-- Recognitions Numbers -->
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Recognition Numbers</h5>
@@ -739,28 +738,21 @@
     </div>
     <div class="col-md-8">
       <h3>Result ノ彡*★,°*</h3>
-      <div class="text-center">
-        <div id="imageDimensions"></div>
-        <div style="margin-top: 25px">
-          <div>
-            <h5>Before</h5>
-            <img
-              class="img-fluid"
-              src="/static/img/img_normal.jpg"
-              alt="image here"
-            />
-          </div>
-          <div>
-            <h5>After</h5>
-            <img
-              class="img-fluid"
-              src="{{ url_for('static', filename=file_path) }}"
-              alt="image here"
-            />
-          </div>
-        </div>
+      <div class="text-center" style="margin-top: 10px">
+        <br />
+        <h5>Image used for recognition :</h5>
+        <img
+          class="img-fluid"
+          src="/static/img/img_normal.jpg"
+          alt="image here"
+        />
+        <br />
+        <h5>
+          Result <br />
+          {{ result }}
+        </h5>
       </div>
     </div>
   </div>
+  {% endblock %}
 </div>
-{% endblock %}

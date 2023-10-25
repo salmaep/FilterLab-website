@@ -28,6 +28,71 @@
   h3 {
     color: rgb(224, 0, 123);
   }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+  }
+
+  .card-game {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    /* Gaya kartu ketika flipped */
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+
+  .message {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+    display: none;
+  }
+
+  .card-game.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card-inner {
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden; /* Menambahkan overflow: hidden untuk memotong gambar jika perlu */
+  }
+
+  .card-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Menggunakan object-fit: cover untuk mengisi area tanpa mempertahankan proporsi asli */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  .card-game.flipped .card-inner {
+    display: block;
+  }
+
+  .matched-card {
+    display: none;
+  }
+
+  .front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 </style>
 
 <div class="container-fluid" style="margin-top: 10px">
@@ -742,25 +807,147 @@
       <div class="text-center">
         <div id="imageDimensions"></div>
         <div style="margin-top: 25px">
-          <div>
-            <h5>Before</h5>
-            <img
-              class="img-fluid"
-              src="/static/img/img_normal.jpg"
-              alt="image here"
-            />
+          <div style="margin-bottom: 10px">
+            <div class="message">
+              <!-- Tempatkan pesan kemenangan di sini -->
+            </div>
+            <div class="score">Score: 0</div>
+            <!-- Menampilkan skor -->
+            <button class="btn btn-dark" id="reset-button">Reset</button>
           </div>
-          <div>
-            <h5>After</h5>
-            <img
-              class="img-fluid"
-              src="{{ url_for('static', filename=file_path) }}"
-              alt="image here"
-            />
+          <div class="card-grid" id="game-board">
+            {% for image in processed_images %}
+            <div class="card-game" data-image="{{ image }}">
+              <div class="card-inner">
+                <img class="front" src="{{ image }}" alt="" />
+                <div class="back"></div>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  const cards = document.querySelectorAll(".card-game");
+  let flippedCards = [];
+  let matchedCards = [];
+  let score = 0; // Tambahkan variabel skor
+
+  // Fungsi untuk mengacak urutan kartu
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function handleCardClick() {
+    const card = this;
+
+    if (
+      flippedCards.length < 2 &&
+      !flippedCards.includes(card) &&
+      !card.classList.contains("flipped")
+    ) {
+      flippedCards.push(card);
+      card.classList.add("flipped");
+
+      if (flippedCards.length === 2) {
+        setTimeout(checkForMatch, 1000);
+      }
+    }
+  }
+
+  function checkForMatch() {
+    const [card1, card2] = flippedCards;
+
+    if (card1.getAttribute("data-image") === card2.getAttribute("data-image")) {
+      matchedCards.push(card1, card2);
+      flippedCards = [];
+      score += 1; // Tambahkan skor jika kartu match
+      updateScore(); // Perbarui tampilan skor
+
+      if (matchedCards.length === cards.length) {
+        updateMessage("Congratulations! You won!");
+      }
+    } else {
+      setTimeout(() => {
+        card1.classList.remove("flipped");
+        card2.classList.remove("flipped");
+        flippedCards = [];
+      }, 1000);
+    }
+  }
+
+  function resetGame() {
+    cards.forEach((card) => {
+      card.classList.remove("flipped");
+    });
+
+    shuffledCards = shuffle([...cards]);
+    flippedCards = [];
+    matchedCards = [];
+    score = 0; // Reset skor saat permainan diulang
+    updateScore(); // Perbarui tampilan skor
+    updateMessage("Good luck!");
+  }
+
+  // ...
+
+  function removeMatchedCards() {
+    matchedCards.forEach((card) => {
+      card.style.display = "none";
+    });
+  }
+
+  function checkForMatch() {
+    const [card1, card2] = flippedCards;
+
+    if (card1.getAttribute("data-image") === card2.getAttribute("data-image")) {
+      matchedCards.push(card1, card2);
+      flippedCards = [];
+      score += 1;
+      updateScore();
+
+      if (matchedCards.length === cards.length) {
+        updateMessage("Congratulations! You won!");
+      }
+
+      // Hapus kartu-kartu yang sudah match
+      removeMatchedCards();
+    } else {
+      setTimeout(() => {
+        card1.classList.remove("flipped");
+        card2.classList.remove("flipped");
+        flippedCards = [];
+      }, 1000);
+    }
+  }
+
+  document.getElementById("game-board").addEventListener("click", function (e) {
+    if (e.target.classList.contains("card-game")) {
+      handleCardClick.call(e.target);
+    }
+  });
+
+  document.getElementById("reset-button").addEventListener("click", resetGame);
+
+  function updateMessage(message) {
+    const messageElement = document.querySelector(".message");
+    messageElement.textContent = message;
+    messageElement.style.display = "block";
+  }
+
+  function updateScore() {
+    const scoreElement = document.querySelector(".score");
+    scoreElement.textContent = `Score: ${score}`;
+  }
+
+  // Inisialisasi permainan
+  resetGame();
+</script>
 {% endblock %}
